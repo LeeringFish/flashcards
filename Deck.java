@@ -7,31 +7,22 @@ import java.util.Scanner;
 public class Deck {
     private Map<String, String> cards;
     private final Scanner scan;
-    private int numCards;
 
-    public Deck(int numCards, Scanner scan) {
+    public Deck(Scanner scan) {
         this.cards = new LinkedHashMap<>();
         this.scan = scan;
-        this.numCards = numCards;
     }
 
-    public void createCards() {
-        String term, definition;
+    public void addCard(String term, String definition) {
+        cards.put(term, definition);
+    }
 
-        for (int i = 1; i <= numCards; i++) {
-            System.out.printf("Card #%d:\n", i);
-            term = scan.nextLine();
-            while (cards.containsKey(term)) {
-                System.out.printf("The term \"%s\" already exists. Try again:", term);
-                term = scan.nextLine();
-            }
-            System.out.printf("The definition for card #%d:\n", i);
-            definition = scan.nextLine();
-            while (cards.containsValue(definition)) {
-                System.out.printf("The definition \"%s\" already exists. Try again:", definition);
-            }
-            cards.put(term, definition);
-        }
+    public boolean containsTerm(String term) {
+        return cards.containsKey(term);
+    }
+
+    public boolean containsDefinition(String definition) {
+        return cards.containsValue(definition);
     }
 
     public void useCards() {
