@@ -16,6 +16,8 @@ public class Main {
             switch (userInput) {
                 case "add" -> addCard(flashcards, scan);
                 case "remove" -> removeCard(flashcards, scan);
+                case "import" -> importCards(flashcards, scan);
+                case "export" -> exportCards(flashcards, scan);
                 case "exit" -> running = false;
                 default -> System.out.println("Invalid selection");
             }
@@ -56,5 +58,25 @@ public class Main {
         }
 
         System.out.println();
+    }
+
+    public static void importCards(Deck cards, Scanner scan) {
+        String fileName;
+        System.out.println("File name:");
+        fileName = scan.nextLine();
+        int numImportedCards = cards.readFromFile(fileName);
+        if (numImportedCards == 0) {
+            System.out.println("File not found.");
+        } else {
+            System.out.printf("%d cards have been loaded.\n", numImportedCards);
+        }
+        System.out.println();
+    }
+
+    public static void exportCards(Deck cards, Scanner scan) {
+        System.out.println("File name:");
+        String fileName = scan.nextLine();
+        int numSavedCards = cards.writeToFile(fileName);
+        System.out.printf("%d cards have been saved.\n\n", numSavedCards);
     }
 }

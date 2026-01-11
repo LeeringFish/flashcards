@@ -1,5 +1,8 @@
 package flashcards;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -19,6 +22,38 @@ public class Deck {
 
     public void removeCard(String card) {
         cards.remove(card);
+    }
+
+    public int readFromFile(String fileName) {
+        String line;
+        String[] parts;
+        int numLoaded = 0;
+
+        File file = new File(fileName);
+        try (Scanner fileReader = new Scanner(file)) {
+            while (fileReader.hasNext()) {
+                line = fileReader.nextLine();
+                parts = line.split(",");
+                cards.put(parts[0], parts[1]);
+                numLoaded++;
+            }
+            return numLoaded;
+        } catch (IOException e) {
+            return 0;
+        }
+    }
+
+    public int writeToFile(String fileName) {
+        File file = new File(fileName);
+        try (PrintWriter printWriter = new PrintWriter(file)) {
+            for (String term: cards.keySet()) {
+                printWriter.printf("%s,%s\n", term, cards.get(term));
+            }
+            return cards.size();
+        } catch (IOException e) {
+            return 0;
+        }
+
     }
 
     public boolean containsTerm(String term) {
