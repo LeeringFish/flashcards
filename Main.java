@@ -15,6 +15,7 @@ public class Main {
             userInput = scan.nextLine();
             switch (userInput) {
                 case "add" -> addCard(flashcards, scan);
+                case "remove" -> removeCard(flashcards, scan);
                 case "exit" -> running = false;
                 default -> System.out.println("Invalid selection");
             }
@@ -41,5 +42,19 @@ public class Main {
 
         cards.addCard(term, definition);
         System.out.printf("The pair (\"%s\":\"%s\") has been added.\n\n", term, definition);
+    }
+
+    public static void removeCard(Deck cards, Scanner scan) {
+        String card;
+        System.out.println("Which card?");
+        card = scan.nextLine();
+        if (cards.containsTerm(card)) {
+            cards.removeCard(card);
+            System.out.println("The card has been removed.");
+        } else {
+            System.out.printf("Can't remove \"%s\": there is no such card.\n", card);
+        }
+
+        System.out.println();
     }
 }

@@ -17,6 +17,10 @@ public class Deck {
         cards.put(term, definition);
     }
 
+    public void removeCard(String card) {
+        cards.remove(card);
+    }
+
     public boolean containsTerm(String term) {
         return cards.containsKey(term);
     }
